@@ -117,16 +117,14 @@ connectDB(connection).then( connection => {
   queryItems(connection).then( data => {
     displayProducts(data);
     promptUser(data).then( answers => {
-      let qty = parseInt(answers.quantity);
-      let id = parseInt(answers.id);
-      queryStock(connection, qty, id)
-        .then( amount => {
-          depleteStock(connection, amount, id)
-            .then( () => { 
-              printReceipt(connection, qty, id);
-              connection.end(); 
-            }, err => handleError(err));
-        }, err => handleError(err));
-    }, err => handleError(err));
-  }, err => handleError(err));
-}, err => handleError(err));
+      let qty = parseInt(answers.quantity),
+          id = parseInt(answers.id);
+      queryStock(connection, qty, id).then( amount => {
+        depleteStock(connection, amount, id).then( () => { 
+          printReceipt(connection, qty, id);
+          connection.end(); 
+        });
+      });
+    });
+  });
+}).catch( err => handleError(err));
