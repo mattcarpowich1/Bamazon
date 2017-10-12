@@ -33,7 +33,8 @@ function queryItems(connection) {
 
 function queryStock(connection, quantity, id) {
   return new Promise((resolve, reject) => {
-    let query = "SELECT stock_quantity FROM products WHERE item_id=" + id;
+    let query = "SELECT stock_quantity " + 
+                "FROM products WHERE item_id=" + id;
     connection.query(query, (err, data) => {
       if (err) reject(err);
       let stock = data[0]["stock_quantity"];
@@ -42,6 +43,7 @@ function queryStock(connection, quantity, id) {
         resolve(amount);
       } else {
         console.log("Insufficient Quantity!");
+        connection.end();
       }
     });
   });
@@ -59,10 +61,10 @@ function depleteStock(connection, amount, id) {
 }
 
 function printReceipt(connection, quantity, id) {
-  let query = "SELECT price, product_name FROM products WHERE item_id= " + id; 
+  let query = "SELECT price, product_name " + 
+              "FROM products WHERE item_id= " + id; 
   connection.query(query, (err, data) => {
     if (err) console.log(err);
-    // console.log(data);
     let price = data[0]["price"];
     let total = price * quantity;
     let name = data[0]["product_name"];
@@ -127,4 +129,4 @@ connectDB(connection).then( connection => {
         }, err => handleError(err));
     }, err => handleError(err));
   }, err => handleError(err));
-});
+}, err => handleError(err));
