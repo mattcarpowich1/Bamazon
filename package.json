@@ -4,7 +4,8 @@
   "description": "Amazon-like storefront Node CLI app using MySQL",
   "main": "bamazonCustomer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mysql-import": "mysql -h 127.0.0.1 -u root < products.sql"
   },
   "repository": {
     "type": "git",
