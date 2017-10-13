@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/mattcarpowich1/Bamazon#readme",
   "dependencies": {
+    "console.table": "^0.9.1",
     "inquirer": "^3.3.0",
     "mysql": "^2.15.0"
   }
